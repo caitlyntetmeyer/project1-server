@@ -1,6 +1,6 @@
-// // Import stuff:
-// var Auth = require('./controllers/auth');
-// // var User = require('./models/user');
+// Import stuff:
+var Auth = require('./controllers/auth');
+var User = require('./models/user');
 // var Project1 = require('./controllers/project1controller');
 
 // var passportService = require('./services/passport');
@@ -14,14 +14,8 @@
 // var requireSignin = passport.authenticate('local', {session:false});
 
 module.exports = function(app){	
-
-	app.get('/', function(req, res, next){
-		res.send("HELLO HOMEPAGE");
-	});
-
-	app.get('/signup', function(req, res, next){
-		res.send("Hey folks, thanks for signing up!");
-	});
+	app.post('/signup', Auth.signup);
+	// });
 
 // 	app.post('api/signin', requireSignin, Auth.signin);
 // 	// When a user wants to sign up, route her to '/signup' and run the signup function:
@@ -32,6 +26,7 @@ module.exports = function(app){
 // 	// Do I need this line? -
 // 	app.put('/api/items/:id', requireAuth, Project1.updateProject1);
 // 	app.delete('/api/items/:id', requireAuth, Project1.deleteProject1);
+
 }
 
 

@@ -19,7 +19,6 @@
     "grunt": "^1.0.1",
     "gulp": "^3.9.1",
     "jsonwebtoken": "^7.4.1",
-    "mongoose": "^4.11.3",
     "pg": "^4.5.6",
     "pg-hstore": "^2.3.2",
     "sequelize": "^3.23.3"
@@ -27,6 +26,8 @@
   "devDependencies": {
     "cors": "^2.8.4",
     "hooks": "^0.3.2",
+    "mongodb": "^2.2.30",
+    "mongoose": "^4.11.3",
     "nodemon": "^1.11.0"
   }
 }
