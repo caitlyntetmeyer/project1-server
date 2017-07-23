@@ -32,8 +32,6 @@ var server = http.createServer(app);
 // // Define a port on your local machine:
 var port = process.env.PORT || 3000;
 
-
-
 // Get your server to listen to any requests from the outside world:
-server.listen(port);
+// server.listen(port);
 console.log('Server listening on ' + port);

@@ -5,10 +5,17 @@ var User = require('../models/user');
 // var jwt = require('jwt-simple');
 // var config = require('../config');
 
-// // When a user signs UP...
+// // When a user signs UP...(see below for Ben Cook's correction)
 // function createUserToken(user){
 // 	// Create a timestamp for when the user created the token:
 // 	var timestamp = new Date().getTime();
+
+
+// Module 9 Correction from Ben Cook:
+// function createUserToken(user){
+//     let timestamp = new Date().getTime();
+//     return jwt.encode({sub: user.id,iat: timestamp }, config.secret);
+// }
 
 // 	// jwt has a "subject" property (sub). Assign sub to user.id because it's static & won't change. Once a user sign up, she'll have an id that always stays the same:
 // 	return jwt.encode({ sub: user.id, iat: timestamp }, config.secret)
@@ -21,8 +28,8 @@ exports.signup = function(req, res, next){
 	var email = req.body.email;
 	var password = req.body.password;
 	
-// 	if ( !email || !password ) {
-// 		return res.status(418).send({ error: "You must provide an email and a password."});
+	// if ( !email || !password ) {
+	// 	return res.status(418).send({ error: "You must provide an email and a password."});
 	
 // };
 
@@ -62,31 +69,6 @@ exports.signup = function(req, res, next){
 // 	// We just need to give her a token.
 // 	res.send({ token: createUserToken(req.user) });
 // }
-
-
-// // Module 9 Correction from Ben Cook:
-// // function createUserToken(user){
-// //     let timestamp = new Date().getTime();
-// //     return jwt.encode({sub: user.id,iat: timestamp }, config.secret);
-// // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
