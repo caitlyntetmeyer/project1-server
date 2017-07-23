@@ -2,24 +2,25 @@ require('dotenv').config();
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var sequelize = require('./db');
-var User = sequelize.import('./models/user');
+// var sequelize = require('./db');
+// var User = sequelize.import('./models/user');
 
 // mongo setup:
 var mongoose = require('mongoose');
 var mongodb = require('./db_mongo');
 var Account = require('./models_mongo/user')(mongoose);
 var Product = require('./models_mongo/products.js')(mongoose);
-mongoose.connect(mongodb.databaseUrl);
+mongoose.connect('http://localhost:3000/api/test');
 mongoose.connection.on('connected', function(){
 	console.log('connected to db ' + mongodb.databaseUrl)
 })
 // end mongo setup
 
-sequelize.sync();
-app.use(bodyParser.json());
-app.use(require('./middleware/headers'));
-app.use(require('./middleware/validate-session'));
+// sequelize.sync();
+// app.use(express.static('../client'));
+// app.use(bodyParser.json());
+// app.use(require('./middleware/headers'));
+// app.use(require('./middleware/validate-session'));
 
 // Creating a user
 app.post('/api/user', function(req, res){
@@ -50,7 +51,7 @@ app.use('/api/login', require('./routes/session'));
 // definition route:POST
 app.use('/api/definition', require('./routes/definition'));
 
-app.use('/api/log', require('./routes/log'));
+app.use('/api/product', require('./routes/product'));
 
 app.use('/api/test', function(req, res) {
 	res.send("Hello World");
