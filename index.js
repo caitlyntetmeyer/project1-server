@@ -4,7 +4,7 @@ var express = require('express');
 var http = require('http');
 var bodyParser = require('body-parser');
 var app = express();
-// var router = require('./router');
+var router = require('./router');
 // var mongoose = require('mongoose');
 
 // // Database connection:
@@ -17,9 +17,8 @@ var app = express();
 
 // Add an instance of bodyParser that will be used to parse incoming JSON requests:
 app.use(bodyParser.json({ type: '*/*' }));
-
-// // Call the router function and pass in the app:
-// router(app);
+// Call the router function and pass in the app:
+router(app);
 
 // /* End Middleware */
 
