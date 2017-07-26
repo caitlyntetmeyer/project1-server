@@ -1,5 +1,6 @@
 require('dotenv').config();
 var express = require('express');
+var http=require('http');
 var app = express();
 var bodyParser = require('body-parser');
 // var sequelize = require('./db');
@@ -9,8 +10,10 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var mongodb = require('./db_mongo');
 var Account = require('./models_mongo/user')(mongoose);
-var Product = require('./models_mongo/products.js')(mongoose);
-mongoose.connect('http://localhost:3000/api/test');
+var Product = require('./models_mongo/product.js')(mongoose);
+// mongoose.connect('mongodb://caitlyntetmeyer1:MerryMen182@ds147551.mlab.com:47551/project1');
+mongoose.connect(
+	'mongodb://localhost:project1/project1');
 mongoose.connection.on('connected', function(){
 	console.log('connected to db ' + mongodb.databaseUrl)
 })
@@ -22,19 +25,26 @@ mongoose.connection.on('connected', function(){
 // app.use(require('./middleware/headers'));
 // app.use(require('./middleware/validate-session'));
 
+//HTTP SERVER SETUP
+
+app.use(bodyParser.json({type: '*/*'}))
+
+var server = http.createServer(app);
+
+
 // Creating a user
 app.post('/api/user', function(req, res){
 	var username = req.body.user.username;
 	var pass = req.body.user.password;
-
+	console.log("IN POST API/USER")
 	Account.register(username, pass);
 	// Account is a variable from above.
 	res.send(200);
 	// Once the data has been saved, send an "OK" message.
 })
 
-// products route:
-app.post('/api/products', function(req, res){
+// product route:
+app.post('/api/product', function(req, res){
 	var name = req.body.product.name;
 	var description = req.body.product.description;
 	var image = req.body.product.image;
@@ -57,6 +67,6 @@ app.use('/api/test', function(req, res) {
 	res.send("Hello World");
 });
 
-app.listen(3000, function(){
+server.listen(3000, function(){
 	console.log("App is listening on 3000.");
 });

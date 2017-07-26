@@ -1,8 +1,8 @@
 var router = require('express').Router();
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
-var sequelize = require('../db.js');
-var User = sequelize.import('../models/user.js');
+// var sequelize = require('../db.js');
+// var User = sequelize.import('../models/user.js');
 
 router.post('/', function(req, res) {
 	/* 1) First, we need a function that searches for a particular user 

@@ -1,36 +1,34 @@
-var Project1 = require('../models/project1.js');
+var Product = require('../models_mongo/product.js');
 
 // This is the add function:
-exports.addProject1 = function(req, res, next){
-	var title = req.body.props.title;
-	var topic = req.body.props.topic;
-	var url = req.body.props.url;
-	var content = req.body.props.content;
+exports.addProduct = function(req, res, next){
+	var title = req.body.shirt.title;
+	var desc = req.body.shirt.desc;
+	var image = req.body.shirt.image;
 	var specificUser = req.user._id; // Mongo queries are much easier with an underscore before _id.
 
-	var project1 = new Project1({
+	var product = new Product({
 		title: title,
-		topic: topic,
-		url: url,
-		content: content,
+		desc: desc,
+		image: image,
 		specificUser: specificUser
 	});
 
-	project1.save(function(err){
+	product.save(function(err){
 		if(err) { return next(err); }
-		res.json(project1);
+		res.json(product);
 	});
 }
 
 // This is the fetch function:
-exports.fetchProject1s = function(req, res) {
+exports.fetchProducts = function(req, res) {
 	// Create specificUser variable to store the id of the incoming request:
 	var specificUser = req.user._id;
-
-	// The .find function below is a Mongoose function. We are searching for any items that correspond to a specific USER.
+	console.log(specificUser);
+	// The .find function below is a Mongoose function. We are searching for any shirts that correspond to a specific USER.
 
 	// Put the specificUser variable as the VALUE in the "find" parameter, along w/the specificUser KEY that matches up to the Mongoose model:
-	Project1.find({specificUser: specificUser})
+	Product.find({specificUser: specificUser})
 	.then(
 		// The fetchSuccess method below returns a response for the specific USER.
 		function fetchSuccess(data) {
@@ -44,10 +42,10 @@ exports.fetchProject1s = function(req, res) {
 	);
 }
 
-// Fetch a single item out of MongoDB:
-exports.fetchProject1 = function(req, res) {
-	var specificProject1 = req.params.id;
-	Project1.findOne({_id: specificProject1})
+// Fetch a single product out of MongoDB:
+exports.fetchProduct = function(req, res) {
+	var specificProduct = req.params.id;
+	Product.findOne({_id: specificProduct})
 	.then(
 		function fetchSuccess(data) {
 			res.json(data);
@@ -58,10 +56,11 @@ exports.fetchProject1 = function(req, res) {
 	);
 }
 
-// Delete a single item out of MongoDB:
-exports.deleteProject1 = function(req, res) {
-	var specificProject1 = req.params.id;
-	Project1.remove({_id: specificProject1})
+// Delete a single product out of MongoDB:
+exports.deleteProduct = function(req, res) {
+	console.log(Object.keys(req.body));
+	var specificProduct = req.body.product._id;
+	Product.remove({_id: specificProduct})
 	.then(
 		function deleteSuccess(data) {
 			res.json(data);
@@ -72,64 +71,23 @@ exports.deleteProject1 = function(req, res) {
 	);
 }
 
-exports.updateProject1 = function(req, res) {
-	var specificProject1 = req.params.id;
-	Project1.findById(specificProject1, function(err, project1Update) {
+exports.updateProduct = function(req, res) {
+	console.log(Object.keys(req.body.shirt));
+	var specificProduct = req.body.shirt._id;
+	console.log(specificProduct)
+	Product.findById(specificProduct, function(err, productUpdate) {
 		if (err) {
 			res.status(500, err.message)
 		} else {
-			project1Update.title = req.body.props.title;
-			project1Update.topic = req.body.props.topic;
-			project1Update.url = req.body.props.url;
-			project1Update.content = req.body.props.content;
-
-			project1Update.save(function(err, project1) {
+			productUpdate.title = req.body.shirt.title;
+			productUpdate.desc = req.body.shirt.desc;
+			productUpdate.image = req.body.shirt.image;
+			productUpdate.save(function(err, product) {
 				if (err) {
 					res.status(500, err.message)
 				}
-				res.send(project1);
+				res.send(product);
 			});
 		};
 	});
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
